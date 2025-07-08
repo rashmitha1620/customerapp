@@ -15,29 +15,20 @@ const HomePage = ({ searchQuery }) => {
     {
       title: 'SPECIAL OFFER',
       subtitle: 'UP TO\n50% OFF',
-      products: [
-        'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=100'
-      ]
+      backgroundImage: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gradient: 'from-emerald-400/80 to-emerald-500/80'
     },
     {
       title: 'MEGA SALE',
       subtitle: 'UP TO\n70% OFF',
-      products: [
-        'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=100'
-      ]
+      backgroundImage: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gradient: 'from-purple-400/80 to-purple-500/80'
     },
     {
       title: 'FLASH DEALS',
       subtitle: 'UP TO\n60% OFF',
-      products: [
-        'https://images.pexels.com/photos/1112598/pexels-photo-1112598.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'https://images.pexels.com/photos/393047/pexels-photo-393047.jpeg?auto=compress&cs=tinysrgb&w=100',
-        'https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=100'
-      ]
+      backgroundImage: 'https://images.pexels.com/photos/1112598/pexels-photo-1112598.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gradient: 'from-red-400/80 to-red-500/80'
     }
   ];
 
@@ -119,8 +110,12 @@ const HomePage = ({ searchQuery }) => {
               {bannerSlides.map((slide, index) => (
                 <div
                   key={index}
-                  className="w-full h-full flex-shrink-0 bg-gradient-to-r from-emerald-400 to-emerald-500 relative"
+                  className="w-full h-full flex-shrink-0 relative bg-cover bg-center"
+                  style={{ backgroundImage: `url(${slide.backgroundImage})` }}
                 >
+                  {/* Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`}></div>
+                  
                   {/* Slide Content */}
                   <div className="relative z-10 p-4 md:p-6 h-full flex flex-col justify-between">
                     <div>
@@ -147,22 +142,6 @@ const HomePage = ({ searchQuery }) => {
                         />
                       ))}
                     </div>
-                  </div>
-                  
-                  {/* Product Images */}
-                  <div className="absolute right-2 md:right-4 top-2 md:top-4 flex flex-col space-y-1 md:space-y-2">
-                    {slide.products.map((product, productIndex) => (
-                      <img
-                        key={productIndex}
-                        src={product}
-                        alt={`Product ${productIndex + 1}`}
-                        className={`object-cover rounded-lg shadow-lg transition-all duration-300 ${
-                          productIndex === 0 ? 'w-12 h-12 md:w-16 md:h-16' :
-                          productIndex === 1 ? 'w-10 h-10 md:w-12 md:h-12' :
-                          'w-8 h-8 md:w-10 md:h-10'
-                        }`}
-                      />
-                    ))}
                   </div>
                 </div>
               ))}

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Toaster } from 'react-hot-toast';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import BottomNavigationBar from './components/common/BottomNavigationBar';
 import CartSidebar from './components/cart/CartSidebar';
 import HomePage from './pages/HomePage';
 import DineOutPage from './pages/DineOutPage';
@@ -13,6 +14,8 @@ import CheckoutPage from './pages/CheckoutPage';
 import OrdersPage from './pages/OrdersPage';
 import ProfilePage from './pages/ProfilePage';
 import AddressesPage from './pages/AddressesPage';
+import SearchPage from './pages/SearchPage';
+import CategoriesPage from './pages/CategoriesPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
@@ -42,15 +45,14 @@ const ProtectedRoute = ({ children }) => {
 // Layout Component
 const Layout = ({ children, onSearchChange }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 flex flex-col pb-16">
       <Header onSearchChange={onSearchChange} />
       <main className="flex-1">
         {children}
       </main>
-      <Footer />
       <CartSidebar />
       <Toaster 
-        position="top-right"
+        position="bottom-center"
         toastOptions={{
           duration: 3000,
           style: {
@@ -81,6 +83,25 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        
+        {/* Search and Categories */}
+        <Route
+          path="/search"
+          element={
+            <Layout>
+              <SearchPage />
+            </Layout>
+          }
+        />
+        
+        <Route
+          path="/categories"
+          element={
+            <Layout>
+              <CategoriesPage />
+            </Layout>
+          }
+        />
         
         {/* Main Routes with Layout */}
         <Route
@@ -200,6 +221,7 @@ function App() {
         {/* Catch all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <BottomNavigationBar />
     </Router>
   );
 }

@@ -155,6 +155,68 @@ export const mockProducts = [
     orderType: 'nationwide'
   },
 
+  // New Recommended Products for Home Page
+  {
+    id: '13',
+    name: 'Lotion',
+    category: 'Health & Beauty',
+    price: 260,
+    originalPrice: 320,
+    image: 'https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=500',
+    rating: 2.660,
+    reviews: 45,
+    inStock: true,
+    vendor: 'Beauty Store',
+    description: 'Moisturizing body lotion for daily use',
+    features: ['Moisturizing', 'Natural Ingredients', 'All Skin Types'],
+    orderType: 'nationwide'
+  },
+  {
+    id: '14',
+    name: 'Wireless',
+    category: 'Electronics',
+    price: 999,
+    originalPrice: 1299,
+    image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=500',
+    rating: 4.941,
+    reviews: 203,
+    inStock: true,
+    vendor: 'TechWorld Electronics',
+    description: 'Premium wireless headphones with noise cancellation',
+    features: ['Noise Cancellation', '20h Battery', 'Quick Charge'],
+    orderType: 'nationwide'
+  },
+  {
+    id: '15',
+    name: 'T-shirt',
+    category: 'Clothing',
+    price: 350,
+    originalPrice: 450,
+    image: 'https://images.pexels.com/photos/1020585/pexels-photo-1020585.jpeg?auto=compress&cs=tinysrgb&w=500',
+    rating: 5.0,
+    reviews: 156,
+    inStock: true,
+    vendor: 'Fashion Hub',
+    description: 'Comfortable cotton t-shirt for everyday wear',
+    features: ['100% Cotton', 'Machine Washable', 'Multiple Colors'],
+    orderType: 'nationwide'
+  },
+  {
+    id: '16',
+    name: 'Laptop',
+    category: 'Electronics',
+    price: 44990,
+    originalPrice: 54990,
+    image: 'https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=500',
+    rating: 4.4,
+    reviews: 89,
+    inStock: true,
+    vendor: 'Tech Store',
+    description: 'High-performance laptop for work and gaming',
+    features: ['Intel i5', '8GB RAM', '512GB SSD'],
+    orderType: 'nationwide'
+  },
+
   // More Food Items for Dine Out
   {
     id: '11',

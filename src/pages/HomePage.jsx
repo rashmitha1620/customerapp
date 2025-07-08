@@ -95,7 +95,7 @@ const HomePage = ({ searchQuery }) => {
     setCurrentSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length);
     setTimeout(() => setIsTransitioning(false), 300);
   };
-  return (
+
   const goToSlide = (index) => {
     if (isTransitioning || index === currentSlide) return;
     setIsTransitioning(true);
@@ -103,6 +103,7 @@ const HomePage = ({ searchQuery }) => {
     setTimeout(() => setIsTransitioning(false), 300);
   };
 
+  return (
     <div className="min-h-screen bg-white">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8">

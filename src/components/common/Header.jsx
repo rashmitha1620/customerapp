@@ -24,11 +24,6 @@ const Header = ({ onSearchChange }) => {
     setIsMenuOpen(false);
   };
 
-  const navigation = [
-    { name: 'Dine Out', href: '/dineout', current: location.pathname === '/dineout' },
-    { name: 'Food Delivery', href: '/food-delivery', current: location.pathname === '/food-delivery' },
-    { name: 'InstaMart', href: '/instamart', current: location.pathname === '/instamart' },
-  ];
 
   return (
     <header className="bg-white shadow-sm border-b sticky top-0 z-50">
@@ -58,24 +53,6 @@ const Header = ({ onSearchChange }) => {
             </Link>
           </div>
 
-          {/* Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    item.current
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
 
           {/* Search Bar */}
           <div className="hidden lg:block flex-1 max-w-lg mx-8">
@@ -209,27 +186,6 @@ const Header = ({ onSearchChange }) => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden pb-4">
-            <div className="space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
-                    item.current
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </header>
   );

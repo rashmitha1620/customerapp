@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Clock, Star, MapPin, Utensils, ShoppingBag, Coffee, Zap, Globe, Store } from 'lucide-react';
+import { ArrowRight, Clock, Star, MapPin, Utensils, ShoppingBag, Coffee, Zap, Globe, Store, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { productsApi } from '../services/api';
 import ProductCard from '../components/products/ProductCard';

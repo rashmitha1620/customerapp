@@ -9,6 +9,7 @@ const HomePage = ({ searchQuery }) => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const bannerSlides = [
     {
@@ -45,12 +46,14 @@ const HomePage = ({ searchQuery }) => {
   }, []);
 
   useEffect(() => {
+    if (isTransitioning) return;
+    
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
-    }, 4000);
+      nextSlide();
+    }, 5000);
 
     return () => clearInterval(timer);
-  }, [bannerSlides.length]);
+  }, [bannerSlides.length, isTransitioning]);
   const fetchFeaturedProducts = async () => {
     try {
       const response = await productsApi.getProducts();
@@ -80,76 +83,109 @@ const HomePage = ({ searchQuery }) => {
   };
 
   const nextSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
+    setTimeout(() => setIsTransitioning(false), 300);
   };
 
   const prevSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrentSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length);
+    setTimeout(() => setIsTransitioning(false), 300);
   };
   return (
+  const goToSlide = (index) => {
+    if (isTransitioning || index === currentSlide) return;
+    setIsTransitioning(true);
+    setCurrentSlide(index);
+    setTimeout(() => setIsTransitioning(false), 300);
+  };
+
     <div className="min-h-screen bg-white">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8">
         {/* Special Offer Banner */}
-        <div className="relative bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-2xl p-4 md:p-6 mb-6 overflow-hidden">
-          {/* Carousel Content */}
-          <div className="relative z-10">
-            <h2 className="text-white text-sm md:text-lg font-bold mb-2">{bannerSlides[currentSlide].title}</h2>
-            <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-              {bannerSlides[currentSlide].subtitle.split('\n').map((line, index) => (
-                <span key={index}>
-                  {line}
-                  {index === 0 && <br />}
-                </span>
+        <div className="relative rounded-2xl mb-6 overflow-hidden">
+          {/* Carousel Container */}
+          <div className="relative w-full h-40 md:h-48">
+            {/* Slides */}
+            <div 
+              className="flex transition-transform duration-300 ease-in-out h-full"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {bannerSlides.map((slide, index) => (
+                <div
+                  key={index}
+                  className="w-full h-full flex-shrink-0 bg-gradient-to-r from-emerald-400 to-emerald-500 relative"
+                >
+                  {/* Slide Content */}
+                  <div className="relative z-10 p-4 md:p-6 h-full flex flex-col justify-between">
+                    <div>
+                      <h2 className="text-white text-sm md:text-lg font-bold mb-2">{slide.title}</h2>
+                      <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold">
+                        {slide.subtitle.split('\n').map((line, lineIndex) => (
+                          <span key={lineIndex}>
+                            {line}
+                            {lineIndex === 0 && <br />}
+                          </span>
+                        ))}
+                      </h1>
+                    </div>
+                    
+                    {/* Pagination Dots */}
+                    <div className="flex space-x-2">
+                      {bannerSlides.map((_, dotIndex) => (
+                        <button
+                          key={dotIndex}
+                          onClick={() => goToSlide(dotIndex)}
+                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                            dotIndex === currentSlide ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/70'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Product Images */}
+                  <div className="absolute right-2 md:right-4 top-2 md:top-4 flex flex-col space-y-1 md:space-y-2">
+                    {slide.products.map((product, productIndex) => (
+                      <img
+                        key={productIndex}
+                        src={product}
+                        alt={`Product ${productIndex + 1}`}
+                        className={`object-cover rounded-lg shadow-lg transition-all duration-300 ${
+                          productIndex === 0 ? 'w-12 h-12 md:w-16 md:h-16' :
+                          productIndex === 1 ? 'w-10 h-10 md:w-12 md:h-12' :
+                          'w-8 h-8 md:w-10 md:h-10'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
               ))}
-            </h1>
+            </div>
             
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+              disabled={isTransitioning}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white rounded-full p-1 md:p-2 transition-all duration-200 disabled:opacity-50"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-16 md:right-20 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+              disabled={isTransitioning}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white rounded-full p-1 md:p-2 transition-all duration-200 disabled:opacity-50"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
-            
-            {/* Pagination Dots */}
-            <div className="flex space-x-2">
-              {bannerSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentSlide ? 'bg-white' : 'bg-white/50'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-          
-          {/* Product Images */}
-          <div className="absolute right-2 md:right-4 top-2 md:top-4 flex flex-col space-y-1 md:space-y-2">
-            {bannerSlides[currentSlide].products.map((product, index) => (
-              <img
-                key={index}
-                src={product}
-                alt={`Product ${index + 1}`}
-                className={`object-cover rounded-lg shadow-lg transition-all duration-300 ${
-                  index === 0 ? 'w-12 h-12 md:w-16 md:h-16' :
-                  index === 1 ? 'w-10 h-10 md:w-12 md:h-12' :
-                  'w-8 h-8 md:w-10 md:h-10'
-                }`}
-              />
-            ))}
           </div>
         </div>
 

@@ -33,7 +33,7 @@ const Header = ({ onSearchChange }) => {
   return (
     <header className="bg-white shadow-sm border-b sticky top-0 z-50">
       {/* Top bar */}
-      <div className="bg-emerald-600 text-white py-2">
+      <div className="bg-emerald-600 text-white py-2 hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center space-x-2">
@@ -78,7 +78,7 @@ const Header = ({ onSearchChange }) => {
           </div>
 
           {/* Search Bar */}
-          <div className="hidden md:block flex-1 max-w-lg mx-8">
+          <div className="hidden lg:block flex-1 max-w-lg mx-8">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
@@ -196,7 +196,7 @@ const Header = ({ onSearchChange }) => {
         </div>
 
         {/* Mobile Search */}
-        <div className="md:hidden pb-4">
+        <div className="lg:hidden pb-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input

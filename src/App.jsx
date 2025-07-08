@@ -45,11 +45,14 @@ const ProtectedRoute = ({ children }) => {
 // Layout Component
 const Layout = ({ children, onSearchChange }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col pb-16">
+    <div className="min-h-screen bg-gray-50 flex flex-col pb-16 md:pb-0">
       <Header onSearchChange={onSearchChange} />
       <main className="flex-1">
         {children}
       </main>
+      <div className="hidden md:block">
+        <Footer />
+      </div>
       <CartSidebar />
       <Toaster 
         position="bottom-center"

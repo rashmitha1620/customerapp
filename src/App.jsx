@@ -64,6 +64,10 @@ const Layout = ({ children, onSearchChange }) => {
           },
         }}
       />
+      {/* Bottom Navigation - Only show on mobile */}
+      <div className="md:hidden">
+        <BottomNavigationBar />
+      </div>
     </div>
   );
 };
@@ -224,7 +228,6 @@ function App() {
         {/* Catch all route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <BottomNavigationBar />
     </Router>
   );
 }
